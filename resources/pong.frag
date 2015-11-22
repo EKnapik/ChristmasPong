@@ -7,6 +7,8 @@ uniform vec2 ballPos;
 uniform vec2 player;
 uniform vec2 comp;
 
+vec2 ballPosT;
+
 
 struct Sphere {
     float radius;
@@ -43,7 +45,8 @@ vec2 objMin(vec2 obj1, vec2 obj2) {
 
 // map of the scene 
 vec2 map(vec3 pos) {
-    Sphere sphere = Sphere(0.15, vec3(0.5, 0.5, 0.0));
+
+    Sphere sphere = Sphere(0.15, vec3(ballPosT, 0.0));
     Capsule capsule = Capsule(0.15, vec3(-1.5, 0.5, 0.0), vec3(-1.5, 2.5, 0.0));
     vec2 result = objMin(vec2(distPlane(pos-vec3(0.0, -20.0, 0.0)), 1.0), vec2(distSphere(pos, sphere), 2.0));
     result = objMin(result, vec2(distCapsule(pos, capsule), 3.0));
@@ -160,6 +163,13 @@ mat3 mkCamMat(in vec3 rayOrigin, in vec3 lookAtPoint, float roll) {
 
 
 void main() {
+    // Transform Ball
+    ballPosT.x = ((ballPos.x * 2) - 100) / 100;
+    ballPosT.y = ((ballPos.y * 2) - 100) / 100;
+
+
+
+
     vec2 res = vec2(1.0, 1.0);
     vec2 q = fragCoord.xy / res.xy;
     vec2 p = -1.0 + 2.0*q;
