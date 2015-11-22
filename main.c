@@ -18,13 +18,21 @@
 
 
 //Functions:
-void initGLUT(void);
+void initGLUT(int argc, char *argv[]);
 void initOpenGL(void);
 void gameLoop(void);
 
 //GLOBALS:
 GLuint vBuffer, eBuffer, shaderProg;
 GLuint vertPos;
+// Simple Square for ray tracing shaders
+GLushort elemData[] = {0, 1, 2, 3, 0, 2};
+//                       x,    y,    z,
+GLfloat vertData[] = {-1.0,  1.0,  0.0,
+                      -1.0, -1.0,  0.0,
+                       1.0, -1.0,  0.0,
+                       1.0,  1.0,  0.0};
+
 
 int main(int argc, char *argv[]) {
 
@@ -32,7 +40,7 @@ int main(int argc, char *argv[]) {
     // setup variable
     // enter glut main loop which is game loop
 
-    initGLUT();
+    initGLUT(argc, argv);
     initOpenGL();
 
     glutMainLoop();
@@ -40,9 +48,9 @@ int main(int argc, char *argv[]) {
 }
 
 
-void initGLUT(void) {
+void initGLUT(int argc, char *argv[]) {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_3_2_CORE_PROFILE | GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
     glutCreateWindow("Christmas Pong");
     glutDisplayFunc(gameLoop);
@@ -55,17 +63,12 @@ Sets the global vertex and element buffers for drawing
 */
 void initOpenGL(void) {
     // OpenGL state variables
-    glEnable(GL_DEPTH_TEST);
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glEnable(GL_DEPTH_TEST | GL_CULL_FACE);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glCullFace(GL_FRONT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    // Simple Square for ray tracing shaders
-    GLushort elemData[] = {0, 1, 2, 3, 0, 2};
-    //                       x,    y,    z,
-    GLfloat vertData[] = {-1.0,  1.0,  0.0,
-                          -1.0, -1.0,  0.0,
-                           1.0, -1.0,  0.0,
-                           1.0,  1.0,  0.0};
+    
     int dataSize = NUM_VERTS * 3 * sizeof(GLfloat);
     glGenBuffers(1, &vBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
