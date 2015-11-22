@@ -156,7 +156,7 @@ mat3 mkCamMat(in vec3 rayOrigin, in vec3 lookAtPoint, float roll) {
 
 
 void main() {
-    vec2 res = vec2(1.0);
+    vec2 res = vec2(1.0, 1.0);
     vec2 q = fragCoord.xy / res.xy;
     vec2 p = -1.0 + 2.0*q;
     p.x *= res.x / res.y;

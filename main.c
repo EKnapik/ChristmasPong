@@ -15,7 +15,7 @@
 
 
 #define WINDOW_HEIGHT 512
-#define WINDOW_WIDTH 512
+#define WINDOW_WIDTH 1024
 
 //Functions:
 void initGLUT(int argc, char *argv[]);
@@ -27,7 +27,8 @@ void gameLoop(void);
 int gameState;
 int mouseState;
 int mouse[2];
-int ball[2];
+int ballPos[2];
+int ballVel[2];
 int player[2];
 int comp[2];
 
@@ -48,7 +49,7 @@ int main(int argc, char *argv[]) {
 void initGLUT(int argc, char *argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-    glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
+    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     glutCreateWindow("Christmas Pong");
     glutDisplayFunc(gameLoop);
     glutPassiveMotionFunc(mouseCallBack);
@@ -57,9 +58,9 @@ void initGLUT(int argc, char *argv[]) {
 
 void mouseCallBack(int x, int y) {
     if(mouseState == GLUT_ENTERED) {
-            printf("X: %d, Y: %d\n", x, y);
-            mouse[0] = x;
-            mouse[1] = y;
+            printf("X: %d, Y: %d\n", mouse[0], mouse[1]);
+            mouse[0] = (int) (x * 100 / WINDOW_WIDTH);
+            mouse[1] = (int) (y * 100 / WINDOW_HEIGHT);
     }
 }
 
@@ -71,9 +72,6 @@ void mouseEntryCallBack(int state) {
 
 
 void gameLoop(void) {
-    // paddle1 pos
-    // paddle2 pos
-    // ball
 
 
     render();
