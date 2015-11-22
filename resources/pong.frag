@@ -164,8 +164,8 @@ mat3 mkCamMat(in vec3 rayOrigin, in vec3 lookAtPoint, float roll) {
 
 void main() {
     // Transform Ball
-    ballPosT.x = ((ballPos.x * 2) - 100) / 100;
-    ballPosT.y = ((ballPos.y * 2) - 100) / 100;
+    ballPosT.x = ((ballPos.x * 2) - 100) / 18;
+    ballPosT.y = ((ballPos.y * 2) - 100) / 18;
 
 
 
