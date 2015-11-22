@@ -36,11 +36,11 @@ vec2 rayMarch(vec3 rayOr, vec3 rayDir) {
     float tMax = 30.0;
     
     float t = tMin;
-    float precis = 0.00002;
+    float precis = 0.0002;
     float material = -1.0;
     float dist;
     
-    for(int i = 0; i < 50; i++) {
+    for(int i = 0; i < 100; i++) {
         vec2 obj = map(rayOr + rayDir*t);
         dist = obj.x; // distance to nearest object
         
@@ -75,7 +75,7 @@ float softshadow(vec3 rayOrigin, vec3 rayDir, float mint, float maxt) {
 
 // fast normal
 vec3 calcNormal(vec3 pos) {
-    vec3 epsilon = vec3(0.00003, 0.0, 0.0);
+    vec3 epsilon = vec3(0.003, 0.0, 0.0);
     vec3 nor = vec3(
         map(pos+epsilon.xyy).x - map(pos-epsilon.xyy).x,
         map(pos+epsilon.yxy).x - map(pos-epsilon.yxy).x,
@@ -138,7 +138,10 @@ mat3 mkCamMat(in vec3 rayOrigin, in vec3 lookAtPoint, float roll) {
 
 
 void main() {
-    vec2 p = fragCoord;
+    vec2 res = vec2(1.0);
+    vec2 q = fragCoord.xy / res.xy;
+    vec2 p = -1.0 + 2.0*q;
+    p.x *= res.x / res.y;
     
     // camera or eye (where rays start)
     vec3 rayOrigin = vec3(0.0, 0.5, -4.0);
