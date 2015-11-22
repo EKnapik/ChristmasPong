@@ -34,6 +34,9 @@ void initOpenGL(void) {
         exit(1);
     }
     vertPos = glGetAttribLocation(shaderProg, "currVert");
+    ball_glPos = glGetUniformLocation(shaderProg, "ballPos");
+    player_glPos = glGetUniformLocation(shaderProg, "playerPos");
+    comp_glPos = glGetUniformLocation(shaderProg, "compPos");
     
     return;
 }
@@ -41,7 +44,7 @@ void initOpenGL(void) {
 
 
 // optionally can be given the game state to render a something
-void render(void) {
+void render(float *ballPos, float *player, float *comp) {
     // render screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(shaderProg);
@@ -50,6 +53,10 @@ void render(void) {
     // pass info to shader
     glEnableVertexAttribArray(vertPos);
     glVertexAttribPointer(vertPos, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glUniform2fv(ball_glPos, 1, ballPos);
+    glUniform2fv(player_glPos, 1, player);
+    glUniform2fv(comp_glPos, 1, comp);
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
     glutSwapBuffers();
 }

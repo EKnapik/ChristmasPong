@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "shaderSetup.h"
-#include "render.h"
 #include "pong.h"
+#include "render.h"
 
 
 #define WINDOW_HEIGHT 512
@@ -27,10 +27,10 @@ void gameLoop(void);
 int gameState;
 int mouseState;
 int mouse[2];
-int ballPos[2];
-int ballVel[2];
-int player[2];
-int comp[2];
+float *ballPos;
+float *ballVel;
+float *player;
+float *comp;
 
 int main(int argc, char *argv[]) {
 
@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
 
     initGLUT(argc, argv);
     initOpenGL();
+    initGame(&ballPos, &ballVel, &player, &comp);
 
     glutMainLoop();
     return 0;
@@ -59,8 +60,8 @@ void initGLUT(int argc, char *argv[]) {
 void mouseCallBack(int x, int y) {
     if(mouseState == GLUT_ENTERED) {
             printf("X: %d, Y: %d\n", mouse[0], mouse[1]);
-            mouse[0] = (int) (x * 100 / WINDOW_WIDTH);
-            mouse[1] = (int) (y * 100 / WINDOW_HEIGHT);
+            mouse[0] = (x * 100 / WINDOW_WIDTH);
+            mouse[1] = (y * 100 / WINDOW_HEIGHT);
     }
 }
 
@@ -72,9 +73,9 @@ void mouseEntryCallBack(int state) {
 
 
 void gameLoop(void) {
+    updateGame(mouse, &ballPos, &ballVel, &player, &comp);
 
-
-    render();
+    render(ballPos, player, comp);
     // only display ever 1/60th of a second
     glutPostRedisplay();
 }

@@ -1,6 +1,7 @@
 #version 120
 
 attribute vec3 currVert;
+
 varying vec2 fragCoord;
 
 void main() {

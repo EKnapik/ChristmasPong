@@ -8,6 +8,6 @@
 #include <stdlib.h>
 
 
-void initGame(int *ballPos, int *ballVel, int *player, int *comp);
-void resetGame(int *ballPos, int *ballVel, int *player, int *comp);
-void updateGame(int *mouse, int *ballPos, int *ballVel, int *player, int *comp);
+void initGame(float **ballPos, float **ballVel, float **player, float **comp);
+void resetGame(float **ballPos, float **ballVel, float **player, float **comp);
+void updateGame(int mouse[], float **ballPos, float **ballVel, float **player, float **comp);

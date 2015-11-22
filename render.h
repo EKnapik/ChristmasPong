@@ -12,9 +12,9 @@
 
 //GLOBALS:
 GLuint vBuffer, eBuffer, shaderProg;
-GLuint vertPos;
+GLuint vertPos, ball_glPos, player_glPos, comp_glPos;
 
 void initOpenGL(void);
 // renders a square to the screen using shaderProg
-void render(void);
+void render(float *ballPos, float *player, float *comp);
 
