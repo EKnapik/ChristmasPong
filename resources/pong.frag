@@ -8,6 +8,14 @@ struct Sphere {
     float radius;
     vec3 pos;
 };
+
+// uses two points to define the capsule
+struct Capsule {
+    float radius;
+    vec3 a;
+    vec3 b;
+};
+
 // ----- DISTANCE FUNCTIONS -----
 float distPlane(vec3 pos) {
     return pos.y;
@@ -15,6 +23,12 @@ float distPlane(vec3 pos) {
 
 float distSphere(vec3 pos, Sphere sphere) {
     return length(pos-sphere.pos) - sphere.radius;
+}
+
+float distCapsule(vec3 pos, Capsule capsule) {
+    vec3 pa = pos-capsule.a, ba = capsule.b-capsule.a;
+    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+    return length( pa - ba*h ) - capsule.radius;
 }
 
 // ---- OBJECT FUNCTIONS --------
@@ -25,8 +39,10 @@ vec2 objMin(vec2 obj1, vec2 obj2) {
 
 // map of the scene 
 vec2 map(vec3 pos) {
-    Sphere sphere = Sphere(0.5, vec3(0.0, 0.5, 0.0));
+    Sphere sphere = Sphere(0.5, vec3(0.5, 0.5, 0.0));
+    Capsule capsule = Capsule(0.1, vec3(-0.5, 0.5, 0.0), vec3(-0.5, 2.5, 0.0));
     vec2 result = objMin(vec2(distPlane(pos), 1.0), vec2(distSphere(pos, sphere), 2.0));
+    result = objMin(result, vec2(distCapsule(pos, capsule), 3.0));
     return result;
 }
 
@@ -107,6 +123,8 @@ vec3 calColor(vec3 rayOr, vec3 rayDir) {
         material = vec3(tile);
     } else if(obj.y > 1.5 && obj.y < 2.5) { // hit the sphere
         material = vec3(0.9, 0.1, 0.3);
+    } else if(obj.y > 2.5 && obj.y < 3.5) { // hit capsule
+        material = vec3(0.1, 0.1, 0.9);
     } else {
         material = vec3(0.0);
     }
