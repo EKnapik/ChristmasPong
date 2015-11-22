@@ -1,6 +1,6 @@
-#version 150
+#version 120
 
-in vec3 currVert;
+attribute vec3 currVert;
 
 void main()
 {
