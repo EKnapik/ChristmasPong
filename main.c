@@ -19,10 +19,17 @@
 
 //Functions:
 void initGLUT(int argc, char *argv[]);
+void mouseCallBack(int x, int y);
+void mouseEntryCallBack(int state);
 void gameLoop(void);
 
 // GLOBALS:
 int gameState;
+int mouseState;
+int mouse[2];
+int ball[2];
+int player[2];
+int comp[2];
 
 int main(int argc, char *argv[]) {
 
@@ -44,7 +51,24 @@ void initGLUT(int argc, char *argv[]) {
     glutInitWindowSize(WINDOW_HEIGHT, WINDOW_WIDTH);
     glutCreateWindow("Christmas Pong");
     glutDisplayFunc(gameLoop);
+    glutPassiveMotionFunc(mouseCallBack);
+    glutEntryFunc(mouseEntryCallBack);
 }
+
+void mouseCallBack(int x, int y) {
+    if(mouseState == GLUT_ENTERED) {
+            printf("X: %d, Y: %d\n", x, y);
+            mouse[0] = x;
+            mouse[1] = y;
+    }
+}
+
+void mouseEntryCallBack(int state) {
+    mouseState = state;
+}
+
+
+
 
 void gameLoop(void) {
     // paddle1 pos

@@ -39,9 +39,9 @@ vec2 objMin(vec2 obj1, vec2 obj2) {
 
 // map of the scene 
 vec2 map(vec3 pos) {
-    Sphere sphere = Sphere(0.5, vec3(0.5, 0.5, 0.0));
-    Capsule capsule = Capsule(0.1, vec3(-0.5, 0.5, 0.0), vec3(-0.5, 2.5, 0.0));
-    vec2 result = objMin(vec2(distPlane(pos), 1.0), vec2(distSphere(pos, sphere), 2.0));
+    Sphere sphere = Sphere(0.15, vec3(0.5, 0.5, 0.0));
+    Capsule capsule = Capsule(0.1, vec3(-1.5, 0.5, 0.0), vec3(-1.5, 1.5, 0.0));
+    vec2 result = objMin(vec2(distPlane(pos-vec3(0.0, -20.0, 0.0)), 1.0), vec2(distSphere(pos, sphere), 2.0));
     result = objMin(result, vec2(distCapsule(pos, capsule), 3.0));
     return result;
 }
@@ -163,7 +163,7 @@ void main() {
     
     // camera or eye (where rays start)
     vec3 rayOrigin = vec3(0.0, 0.5, -4.0);
-    vec3 lookAtPoint = vec3(0.0, 0.5, 0.0);
+    vec3 lookAtPoint = vec3(0.0, 0.5, 100.0);
     float focalLen = 1.0; // how far camera is from image plane
     mat3 camMat = mkCamMat(rayOrigin, lookAtPoint, 0.0);
 
