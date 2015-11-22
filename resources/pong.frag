@@ -8,6 +8,7 @@ uniform vec2 player;
 uniform vec2 comp;
 
 vec2 ballPosT;
+vec2 playerT;
 
 
 struct Sphere {
@@ -47,7 +48,7 @@ vec2 objMin(vec2 obj1, vec2 obj2) {
 vec2 map(vec3 pos) {
 
     Sphere sphere = Sphere(0.15, vec3(ballPosT, 0.0));
-    Capsule capsule = Capsule(0.15, vec3(-1.5, 0.5, 0.0), vec3(-1.5, 2.5, 0.0));
+    Capsule capsule = Capsule(0.15, vec3(2.0, 0.5, 0.0), vec3(2.0, 2.5, 0.0));
     vec2 result = objMin(vec2(distPlane(pos-vec3(0.0, -20.0, 0.0)), 1.0), vec2(distSphere(pos, sphere), 2.0));
     result = objMin(result, vec2(distCapsule(pos, capsule), 3.0));
     return result;
@@ -131,7 +132,7 @@ vec3 calColor(vec3 rayOr, vec3 rayDir) {
     } else if(obj.y > 1.5 && obj.y < 2.5) { // hit the sphere
         material = vec3(0.9, 0.1, 0.3);
     } else if(obj.y > 2.5 && obj.y < 3.5) { // hit capsule
-        material = vec3(0.1, 0.1, 0.9);
+        material = vec3(0.1, 0.9, 0.1);
     } else {
         material = vec3(0.0);
     }
@@ -166,6 +167,8 @@ void main() {
     // Transform Ball
     ballPosT.x = ((ballPos.x * 2) - 100) / 17;
     ballPosT.y = ((ballPos.y * 2) - 100) / 17;
+
+    playerT = ((player *2) - 100) / 17;
 
 
     vec2 res = vec2(1.0, 1.0);
