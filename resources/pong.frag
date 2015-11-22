@@ -4,44 +4,6 @@
 
 varying vec2 fragCoord;
 
-float fbm(vec2 p) {
-    float ql = length( p );
-    p.x += 0.05*sin(.81*iGlobalTime+ql*2.0);
-    p.y += 0.05*sin(1.53*iGlobalTime+ql*6.0);
-    
-    float total = 0.0;
-    float freq = 0.0152250;
-    float lacunarity = 2.51;
-    float gain = 0.15;
-    float amp = gain;
-    
-    for(int i = 0; i < 5; i++) {
-        total += texture2D(iChannel0, p*freq).r*amp;
-        freq *= lacunarity;
-        amp *= gain;
-    }
-    
-    return total;
-}
-
-float fbm3(vec3 p) {
-    float ql = length( p );
-    
-    float total = 0.0;
-    float freq = .02250;
-    float lacunarity = 0.151;
-    float gain = 0.15;
-    float amp = gain;
-    
-    for(int i = 0; i < 5; i++) {
-        total += texture2D(iChannel1, p.xy*freq).r*amp;
-        freq *= lacunarity;
-        amp *= gain;
-    }
-    
-    return total;
-}
-
 //-----------OBJECT OPERATIONS-----------
 vec2 shapeMin(vec2 shape1, vec2 shape2) {
     return (shape1.x < shape2.x) ? shape1 : shape2;
@@ -196,7 +158,7 @@ mat3 mkCamMat(in vec3 rayOrigin, in vec3 lookAtPoint, float roll) {
 }
 
 
-void mainImage() {
+void main() {
     vec2 iResolution = vec2(512.0, 512.0);
     vec2 q = fragCoord.xy / iResolution.xy;
     vec2 p = -1.0 + 2.0*q;
@@ -214,7 +176,6 @@ void mainImage() {
     //render the scene with ray marching
     vec3 col = calColor(rayOrigin, rayDir);
 
-    gl_FragColor = vec4(col, 1.0); 
-    //fragColor = vec4(.9); // that off white
+    gl_FragColor = vec4(fragCoord.x); 
 }
 

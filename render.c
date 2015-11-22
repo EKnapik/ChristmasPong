@@ -28,7 +28,7 @@ void initOpenGL(void) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLushort), elemData, GL_STATIC_DRAW);
 
     // compile shader programs here in Resources folder
-    shaderProg = shaderSetup("resources/shader.vert", "resources/shader.frag");
+    shaderProg = shaderSetup("resources/pong.vert", "resources/pong.frag");
     if (!shaderProg) {
         perror("ERROR Setting up default shadern");
         exit(1);
