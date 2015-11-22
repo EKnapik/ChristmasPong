@@ -17,9 +17,9 @@ void resetGame(float **ballPos, float **ballVel, float **player, float **comp) {
     (*ballPos)[0] = 50;
     (*ballPos)[1] = 50;
 
-    srand(134230948);
-    (*ballVel)[0] = (rand() % 10) -5;
-    (*ballVel)[1] = (rand() % 10) -5;
+    // srand(3423094);
+    (*ballVel)[0] = 1.0; // (rand() % 4) -2;
+    (*ballVel)[1] = -2.0; // (rand() % 4) -2;
 
     (*player)[0] = 5;
     (*player)[1] = 50;
